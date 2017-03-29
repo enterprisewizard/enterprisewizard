@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:task="http://www.springframework.org/schema/task"
+	
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/task  
+		http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreResourceNotFound" value="true" />
+		<!-- <property name="locations" value="classpath*:/jdbc.properties"/> -->
+		<property name="locations">
+            <list>
+                <!-- jdbc config -->
+                <value>classpath*:/jdbc.properties</value>
+                <!-- barcodepage config -->
+                <value>classpath*:/barcodepage.properties</value>
+                <!-- license config -->
+                <value>classpath*:/license.properties</value>
+            </list>
+        </property>
+	</bean>
+	<!-- 
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="maxActive" value="${dbcp.maxActive}" />
+		<property name="maxIdle" value="${dbcp.maxIdle}" />
+		<property name="defaultAutoCommit" value="false" />
+		<property name="timeBetweenEvictionRunsMillis" value="3600000"/>
+		<property name="minEvictableIdleTimeMillis" value="3600000"/>
+	</bean>
+
+	 -->
+		 
+	<bean id="mySqlDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+          <property name="driverClass"><value>${mysql.jdbc.driverClassName}</value></property>
+          <property name="jdbcUrl"><value>${mysql.jdbc.url}</value></property>               
+          <property name="user"><value>${mysql.jdbc.username}</value></property>
+          <property name="password"><value>${mysql.jdbc.password}</value></property>
+          <property name="minPoolSize"><value>5</value></property>
+          <property name="maxPoolSize"><value>10</value></property>
+          <property name="maxIdleTime"><value>1800</value></property>
+          <property name="acquireIncrement"><value>2</value></property>
+          <property name="maxStatements"><value>1000</value></property>
+          <property name="initialPoolSize"><value>5</value></property>
+          <property name="idleConnectionTestPeriod"><value>1800</value></property>
+          <property name="acquireRetryAttempts"><value>30</value></property>
+          <property name="breakAfterAcquireFailure"><value>true</value></property>
+          <property name="testConnectionOnCheckout"><value>true</value></property>
+	</bean>
+	
+	<!-- enable autowire -->
+    <context:annotation-config />
+    
+    <!-- batch job -->
+	
+	<!--MyBatis integration with Spring as define sqlSessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="mySqlDataSource" />
+		<property name="configLocation" value="classpath:mybatis-configuration.xml"/>
+		<!-- <property name="mapperLocations" value="classpath*:cn/com/ecointel/roomyi/authority/persistence/*.xml" /> -->
+	</bean>
+	
+	<bean id="mapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="ew.**.persistence" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	
+	<!-- transaction manager, use JtaTransactionManager for global tx -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="mySqlDataSource" />
+    </bean>
+	
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<!-- 扫描业务层service实现类 -->
+	<context:component-scan base-package="ew.**.impl" />
+	
+	<bean id="springContextHolder" class="dwz.framework.spring.SpringContextHolder" />
+	
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>res.biz.messages</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- <bean class="com.mangofactory.swagger.configuration.SpringSwaggerConfig" /> -->
+</beans> 
