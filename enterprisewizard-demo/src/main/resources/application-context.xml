@@ -90,7 +90,8 @@
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	
 	<!-- 扫描业务层service实现类 -->
-	<context:component-scan base-package="ew.**.impl" />
+	<context:component-scan base-package="ew.framework.service.**.impl" />
+	<context:component-scan base-package="ew.service.**.impl" />
 	
 	<bean id="springContextHolder" class="dwz.framework.spring.SpringContextHolder" />
 	
@@ -102,6 +103,4 @@
 			</list>
 		</property>
 	</bean>
-	
-	<!-- <bean class="com.mangofactory.swagger.configuration.SpringSwaggerConfig" /> -->
 </beans> 

@@ -1,6 +1,7 @@
-package ew.framework.user;
+package ew.framework.service;
 
 import dwz.framework.sys.business.BusinessObjectServiceMgr;
+import ew.framework.persistence.beans.SysUser;
 
 public interface UserServiceMgr extends BusinessObjectServiceMgr {
 	String SERVICE_NAME = "userServiceMgr";
@@ -49,5 +50,7 @@ public interface UserServiceMgr extends BusinessObjectServiceMgr {
 //	 * @param id
 //	 */
 //	void inActiveUsesr(int id);
+
+	SysUser getUserById(Integer id);
 
 }
