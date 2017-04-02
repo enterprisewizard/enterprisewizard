@@ -2,7 +2,7 @@ package dwz.framework.sys.exception;
 
 import java.util.Map;
 
-import ew.framework.rest.OperationResult;
+import ew.framework.controller.rest.OperationResult;
 
 public class ServiceVLDException extends RuntimeException {
 	private OperationResult operResult;

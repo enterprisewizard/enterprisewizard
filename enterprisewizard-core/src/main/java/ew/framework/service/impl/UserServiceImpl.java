@@ -18,8 +18,16 @@ public class UserServiceImpl extends AbstractBusinessObjectServiceMgr implements
 	
 	@Override
 	public SysUser getUserById(Integer id) {
-		// TODO Auto-generated method stub
-		
 		return sysUserMapper.loadUserById(id);
+	}
+
+	@Override
+	public void createUser(SysUser obj) throws Exception {
+		Integer loginIdCount = sysUserMapper.countByLoginId(obj.getLoginId());
+		if(loginIdCount <= 0){
+			sysUserMapper.insert(obj);
+		}else{
+			throw new Exception("loginId is repeat");
+		}
 	}
 }

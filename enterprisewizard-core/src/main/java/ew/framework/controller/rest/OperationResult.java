@@ -1,4 +1,4 @@
-package ew.framework.rest;
+package ew.framework.controller.rest;
 
 import java.util.Map;
 

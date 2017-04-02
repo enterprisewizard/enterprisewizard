@@ -1,4 +1,4 @@
-package ew.controller;
+package ew.framework.controller;
 
 import java.util.Date;
 import java.util.Locale;
@@ -10,17 +10,16 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
 import dwz.common.util.ServerInfo;
 import dwz.framework.config.AppConfiguration;
 import dwz.framework.config.Constants;
+import dwz.framework.sys.exception.ServiceVLDException;
 import dwz.web.editor.DateEditor;
 import dwz.web.editor.DoubleEditor;
 import dwz.web.editor.IntegerEditor;
 import dwz.web.editor.LongEditor;
+import ew.framework.controller.rest.OperationResult;
 
 public abstract class BaseController {
 	
@@ -30,6 +29,9 @@ public abstract class BaseController {
 	@Autowired
 	private ResourceBundleMessageSource _res;
 	
+//	@Autowired
+//	protected SpringContextHolder _contextHolder;
+
 	@InitBinder
 	protected void initBinder(HttpServletRequest request,
 			ServletRequestDataBinder binder) throws Exception {
@@ -40,20 +42,35 @@ public abstract class BaseController {
 		binder.registerCustomEditor(Date.class, new DateEditor());
 	}
 
-	protected ModelAndView ajaxDone(int statusCode, String message, String forwardUrl) {
-		ModelAndView mav = new ModelAndView("ajaxDone");
-		mav.addObject("statusCode", statusCode);
-		mav.addObject("message", message);
-		mav.addObject("forwardUrl", forwardUrl);
+	protected OperationResult ajaxDone(int statusCode, String message, String forwardUrl) {
+		OperationResult mav = new OperationResult(statusCode, message, forwardUrl);
+		//mav.addObject("statusCode", statusCode);
+		//mav.addObject("message", message);
+		//mav.addObject("forwardUrl", forwardUrl);
 		return mav;
 	}
 	
-	protected ModelAndView ajaxDoneSuccess(String message) {
-		return ajaxDone(200, message, "");
+	protected OperationResult ajaxDone(int statusCode, String message) {
+		OperationResult mav = new OperationResult(statusCode, message);
+		//mav.addObject("statusCode", statusCode);
+		//mav.addObject("message", message);
+		//mav.addObject("forwardUrl", forwardUrl);
+		return mav;
+	}
+	
+	protected OperationResult ajaxDoneSuccess(String message) {
+		return ajaxDone(200, message);
 	}
 
-	protected ModelAndView ajaxDoneError(String message) {
-		return ajaxDone(300, message, "");
+	protected OperationResult ajaxDoneError(String message) {
+		return ajaxDone(300, message);
+	}
+	
+	protected OperationResult ajaxDoneException(String message) {
+		//OperationResult result =  ajaxDone(300, message);
+		return ajaxDone(300, message);
+		//return new ServiceVLDException(result);
+		
 	}
 	protected String getMessage(String code) {
 		return this.getMessage(code, new Object[] {});
@@ -79,10 +96,10 @@ public abstract class BaseController {
 
 	protected String getMessage(String code, Object[] args) {
 		//HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
-		LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
-		Locale locale = localeResolver.resolveLocale(request);
+		//LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+		//Locale locale = localeResolver.resolveLocale(request);
 
-		return _res.getMessage(code, args, locale);
+		return _res.getMessage(code, args, Locale.SIMPLIFIED_CHINESE);
 	}
 	
 	protected AppConfiguration getAppConfig() {
@@ -117,7 +134,7 @@ public abstract class BaseController {
 	}
 	
 	@ExceptionHandler(Exception.class)
-	public ModelAndView exception(Exception e, HttpServletRequest request) {
+	public OperationResult exception(Exception e, HttpServletRequest request) {
 		e.printStackTrace();
 		
 		request.setAttribute("exception", e);
@@ -126,10 +143,11 @@ public abstract class BaseController {
 			return ajaxDoneError(e.getMessage());
 		}
 		
-		ModelAndView mav = new ModelAndView("error");
+		OperationResult mav = new OperationResult("error");
 		mav.addObject("statusCode", 300);
 		mav.addObject("message", e.getMessage());
 		
 		return mav;
 	}
 }
+

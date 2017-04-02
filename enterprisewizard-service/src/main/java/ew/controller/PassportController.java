@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import dwz.framework.config.Constants;
 import dwz.framework.sys.exception.ServiceException;
+import ew.framework.controller.BaseController;
 
 //@Controller
 @RequestMapping(value="/passport")

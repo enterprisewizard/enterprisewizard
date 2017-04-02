@@ -4,6 +4,8 @@ package ew.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ew.framework.controller.BaseController;
+
 @Controller("ew.indexController")
 @RequestMapping("/ew")
 public class IndexController extends BaseController{

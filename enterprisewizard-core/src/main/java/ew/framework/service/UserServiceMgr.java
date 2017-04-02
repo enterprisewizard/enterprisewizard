@@ -53,4 +53,6 @@ public interface UserServiceMgr extends BusinessObjectServiceMgr {
 
 	SysUser getUserById(Integer id);
 
+	void createUser(SysUser obj) throws Exception ;
+
 }

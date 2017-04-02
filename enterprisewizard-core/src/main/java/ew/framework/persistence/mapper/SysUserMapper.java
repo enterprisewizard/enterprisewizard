@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 public interface SysUserMapper extends BaseMapper<SysUser, Integer>{
 
 	SysUser loadUserById(Integer id);
+
+	Integer countByLoginId(String loginId);
 	
 	
 }
