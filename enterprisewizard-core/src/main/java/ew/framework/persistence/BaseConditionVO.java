@@ -1,4 +1,4 @@
-package ew.persistence;
+package ew.framework.persistence;
 
 import java.util.Date;
 

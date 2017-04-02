@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import dwz.common.util.ServerInfo;
 import dwz.framework.config.AppConfiguration;
 import dwz.framework.config.Constants;
-import dwz.framework.sys.exception.ServiceVLDException;
 import dwz.web.editor.DateEditor;
 import dwz.web.editor.DoubleEditor;
 import dwz.web.editor.IntegerEditor;

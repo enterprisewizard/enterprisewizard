@@ -1,5 +1,9 @@
 package ew.controller.management;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,9 +17,11 @@ import com.wordnik.swagger.annotations.ApiParam;
 
 import ew.common.util.StringUtils;
 import ew.framework.controller.BaseController;
+import ew.framework.persistence.BaseConditionVO;
 import ew.framework.persistence.beans.SysUser;
 import ew.framework.controller.rest.OperationResult;
 import ew.framework.service.UserServiceMgr;
+import ew.framework.vo.RetrieveVO;
 
 @Controller("ew.management.userController")
 @RequestMapping(value="/management/user")
@@ -35,7 +41,6 @@ public class UserController extends BaseController{
 	@ResponseBody
 	@ApiOperation(value = "创建SysUser对象", httpMethod = "POST", response = OperationResult.class, notes = "创建SysUser对象")
 	public OperationResult create(@RequestBody SysUser obj){
-	    //return userService.create(sysUser);
 		if(obj != null)
 		{
 			try
@@ -59,5 +64,15 @@ public class UserController extends BaseController{
 		{
 			return ajaxDoneException(getMessage("msg.operation.failure")).addObject("errormsg", "SysUser is null");
 		}
+	}
+	
+	@RequestMapping(value="/retrieve", method = RequestMethod.POST)
+	@ResponseBody
+	@ApiOperation(value = "分页查询SysUser列表", httpMethod = "POST", response = RetrieveVO.class, notes = "分页查询SysUser列表")
+	public RetrieveVO<SysUser> retrieve(@RequestBody BaseConditionVO vo){
+		
+		RetrieveVO<SysUser> result = userService.retrieve(vo);
+		
+		return result;
 	}
 }

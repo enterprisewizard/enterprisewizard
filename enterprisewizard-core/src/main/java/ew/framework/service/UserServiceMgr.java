@@ -1,7 +1,9 @@
 package ew.framework.service;
 
 import dwz.framework.sys.business.BusinessObjectServiceMgr;
+import ew.framework.persistence.BaseConditionVO;
 import ew.framework.persistence.beans.SysUser;
+import ew.framework.vo.RetrieveVO;
 
 public interface UserServiceMgr extends BusinessObjectServiceMgr {
 	String SERVICE_NAME = "userServiceMgr";
@@ -54,5 +56,7 @@ public interface UserServiceMgr extends BusinessObjectServiceMgr {
 	SysUser getUserById(Integer id);
 
 	void createUser(SysUser obj) throws Exception ;
+
+	RetrieveVO<SysUser> retrieve(BaseConditionVO vo);
 
 }
