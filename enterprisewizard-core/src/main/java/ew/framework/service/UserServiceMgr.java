@@ -20,43 +20,17 @@ public interface UserServiceMgr extends BusinessObjectServiceMgr {
 //	
 //	void verify(String verifyCode) throws ServiceException;
 //
-//	/**
-//	 * 后台添加用户
-//	 * 
-//	 * @param user
-//	 */
-//	void addUser(User user) throws ServiceException;
-//
-//	void updUser(User user);
-//
-//	User getUser(int id);
-//
-//	User getUserByUsername(String username);
-//
-//	void delUser(int id);
-//
-//	List<User> searchUser(BaseConditionVO vo);
-//
-//	Integer searchUserNum(BaseConditionVO vo);
-//
-//	/**
-//	 * 激活一个用户
-//	 * 
-//	 * @param id
-//	 */
-//	void activeUser(int id);
-//
-//	/**
-//	 * 禁用一个用户
-//	 * 
-//	 * @param id
-//	 */
-//	void inActiveUsesr(int id);
-
-	SysUser getUserById(Integer id);
-
-	void createUser(SysUser obj) throws Exception ;
+	void create(SysUser obj) throws Exception ;
 
 	RetrieveVO<SysUser> retrieve(BaseConditionVO vo);
 
+	void update(SysUser obj) throws Exception ;
+
+	void delete(Integer id) throws Exception ;
+	
+	SysUser getUserById(Integer id);
+	
+	void activeUser(Integer id);
+	
+	void inActiveUsesr(Integer id);
 }

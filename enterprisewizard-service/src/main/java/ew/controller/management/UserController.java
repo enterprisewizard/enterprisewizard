@@ -48,7 +48,7 @@ public class UserController extends BaseController{
 				String loginId = obj.getLoginId();
 				if(StringUtils.isNotBlank(loginId))
 				{
-					userService.createUser(obj);
+					userService.create(obj);
 					return ajaxDoneSuccess(getMessage("msg.operation.success"));
 				}
 				else
@@ -74,5 +74,55 @@ public class UserController extends BaseController{
 		RetrieveVO<SysUser> result = userService.retrieve(vo);
 		
 		return result;
+	}
+	
+	@RequestMapping(value="/update", method = RequestMethod.POST)
+	@ResponseBody
+	@ApiOperation(value = "更新SysUser对象", httpMethod = "POST", response = OperationResult.class, notes = "更新SysUser对象")
+	public OperationResult update(@RequestBody SysUser obj){
+		if(obj != null)
+		{
+			try
+			{
+				Integer id = obj.getId();
+				if(id != null)
+				{
+					userService.update(obj);
+					return ajaxDoneSuccess(getMessage("msg.operation.success"));
+				}
+				else
+				{
+					return ajaxDoneException(getMessage("msg.operation.failure")).addObject("errormsg", "id is null");
+				}
+			}catch(Exception ex)
+			{
+				return ajaxDoneException(getMessage("msg.operation.failure")).addObject("errormsg", ex.toString());
+			}
+		}
+		else
+		{
+			return ajaxDoneException(getMessage("msg.operation.failure")).addObject("errormsg", "SysUser is null");
+		}
+	}
+	
+	@RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	@ApiOperation(value = "根据id获取SysUser对象", httpMethod = "GET", response = SysUser.class, notes = "根据id获取SysUser对象")
+	public OperationResult delete(@ApiParam(required = true, name = "id", value = "用户名内部id") @PathVariable Integer id){
+		if(id != null)
+		{
+			try
+			{
+				userService.delete(id);
+				return ajaxDoneSuccess(getMessage("msg.operation.success"));
+			}catch(Exception ex)
+			{
+				return ajaxDoneException(getMessage("msg.operation.failure")).addObject("errormsg", ex.toString());
+			}
+		}
+		else
+		{
+			return ajaxDoneException(getMessage("msg.operation.failure")).addObject("errormsg", "id is null");
+		}
 	}
 }

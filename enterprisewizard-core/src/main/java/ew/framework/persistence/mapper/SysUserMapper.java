@@ -12,13 +12,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SysUserMapper extends BaseMapper<SysUser, Integer>{
 
-	SysUser loadUserById(Integer id);
-
-	Integer countByLoginId(String loginId);
-
 	List<SysUser> findPageBreakByBaseCondition(BaseConditionVO vo, RowBounds rb);
 
 	Integer findNumByBaseCondition(BaseConditionVO vo);
 	
+	Integer countByLoginId(String loginId);
 	
+	void updateStatus(SysUser sysUser);
+	
+	List<SysUser> findByName(String name);
 }

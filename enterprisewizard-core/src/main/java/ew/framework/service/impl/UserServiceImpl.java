@@ -22,12 +22,7 @@ public class UserServiceImpl extends AbstractBusinessObjectServiceMgr implements
 	private SysUserMapper sysUserMapper;
 	
 	@Override
-	public SysUser getUserById(Integer id) {
-		return sysUserMapper.loadUserById(id);
-	}
-
-	@Override
-	public void createUser(SysUser obj) throws Exception {
+	public void create(SysUser obj) throws Exception {
 		Integer loginIdCount = sysUserMapper.countByLoginId(obj.getLoginId());
 		if(loginIdCount <= 0){
 			sysUserMapper.insert(obj);
@@ -42,5 +37,32 @@ public class UserServiceImpl extends AbstractBusinessObjectServiceMgr implements
 		List<SysUser> dataList = sysUserMapper.findPageBreakByBaseCondition(vo, rb);
 		Integer totalCount = sysUserMapper.findNumByBaseCondition(vo);
 		return new RetrieveVO<SysUser>(dataList, totalCount);
+	}
+
+	@Override
+	public void update(SysUser obj) throws Exception {
+		sysUserMapper.update(obj);
+	}
+
+	@Override
+	public void delete(Integer id) throws Exception {
+		sysUserMapper.delete(id);
+	}
+	
+	@Override
+	public SysUser getUserById(Integer id) {
+		return sysUserMapper.load(id);
+	}
+
+	@Override
+	public void activeUser(Integer id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void inActiveUsesr(Integer id) {
+		// TODO Auto-generated method stub
+		
 	}
 }
