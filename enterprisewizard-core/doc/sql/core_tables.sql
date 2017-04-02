@@ -16,3 +16,5 @@ CREATE TABLE `sys_user` (
 	`last_updated_by`  int NULL COMMENT '最后更新人' ,
 	`last_update_date`  datetime NULL COMMENT '最后更新时间' 
 );
+
+INSERT INTO `sys_user` VALUES (1, '超级管理员', 'superman', 'ew123456', '1', '2017-4-2 10:19:38', '2017-4-30 10:19:45', 'enterprisewizard@163.com', '13450368493', '1', '127.0.0.1', '2017-4-2 10:20:08', 1, '2017-4-2 10:19:55', 1, '2017-4-2 10:20:01');
