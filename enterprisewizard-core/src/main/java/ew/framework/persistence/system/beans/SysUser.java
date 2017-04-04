@@ -1,4 +1,4 @@
-package ew.framework.persistence.beans;
+package ew.framework.persistence.system.beans;
 
 import java.util.Date;
 

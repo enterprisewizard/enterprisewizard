@@ -1,8 +1,8 @@
-package ew.framework.service;
+package ew.framework.service.system;
 
 import dwz.framework.sys.business.BusinessObjectServiceMgr;
 import ew.framework.persistence.BaseConditionVO;
-import ew.framework.persistence.beans.SysUser;
+import ew.framework.persistence.system.beans.SysUser;
 import ew.framework.vo.RetrieveVO;
 
 public interface UserServiceMgr extends BusinessObjectServiceMgr {

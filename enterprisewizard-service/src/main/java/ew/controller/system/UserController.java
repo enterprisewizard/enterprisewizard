@@ -1,8 +1,4 @@
-package ew.controller.management;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+package ew.controller.system;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,9 +14,9 @@ import com.wordnik.swagger.annotations.ApiParam;
 import ew.common.util.StringUtils;
 import ew.framework.controller.BaseController;
 import ew.framework.persistence.BaseConditionVO;
-import ew.framework.persistence.beans.SysUser;
+import ew.framework.persistence.system.beans.SysUser;
 import ew.framework.controller.rest.OperationResult;
-import ew.framework.service.UserServiceMgr;
+import ew.framework.service.system.UserServiceMgr;
 import ew.framework.vo.RetrieveVO;
 
 @Controller("ew.management.userController")

@@ -1,7 +1,7 @@
-package ew.persistence.management.mapper;
+package ew.persistence.system.mapper;
 
 import dwz.dal.BaseMapper;
-import ew.persistence.management.beans.Test;
+import ew.persistence.system.beans.Test;
 
 import org.springframework.stereotype.Repository;
 

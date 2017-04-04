@@ -1,6 +1,6 @@
-package ew.service.management;
+package ew.service.system;
 
-import ew.persistence.management.beans.Test;
+import ew.persistence.system.beans.Test;
 
 
 public interface TestService {

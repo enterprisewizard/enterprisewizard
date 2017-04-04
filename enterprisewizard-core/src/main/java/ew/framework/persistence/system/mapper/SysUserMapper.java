@@ -1,10 +1,10 @@
-package ew.framework.persistence.mapper;
+package ew.framework.persistence.system.mapper;
 
 import java.util.List;
 
 import dwz.dal.BaseMapper;
 import ew.framework.persistence.BaseConditionVO;
-import ew.framework.persistence.beans.SysUser;
+import ew.framework.persistence.system.beans.SysUser;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Repository;
